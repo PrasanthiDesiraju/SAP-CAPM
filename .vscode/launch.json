@@ -9,7 +9,16 @@
       "name": "cds run",
       "request": "launch",
       "type": "node-terminal",
+<<<<<<< HEAD
       "skipFiles": [ "<node_internals>/**" ]
     }
   ]
 }
+=======
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    }
+  ]
+}
+>>>>>>> latest
