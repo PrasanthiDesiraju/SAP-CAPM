@@ -19,13 +19,6 @@ context master {
         COMPANY_NAME: String(250);
     }
 
-    annotate businesspartner with {
-        NODE_KEY @title: '{i18n>bp_key}';
-        BP_ROLE @title : '{i18n>bp_role}';
-    };
-
-
-
     entity address {
         key NODE_KEY: Guid;
         CITY: String(44);
