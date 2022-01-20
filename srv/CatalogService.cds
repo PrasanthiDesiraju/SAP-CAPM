@@ -24,4 +24,10 @@ service CatalogService@(path:'/CatalogService') {
         PRODUCT_GUID: redirected to ProductSet
     }
 
+    entity POWorklist as projection on db.CDSViews.POWorklist;
+    entity ProductOrders as projection on db.CDSViews.ProductViewSub;
+    entity ProductAggregation1 as projection on db.CDSViews.CProductValuesView excluding {
+        ProductId
+    };
+
 }

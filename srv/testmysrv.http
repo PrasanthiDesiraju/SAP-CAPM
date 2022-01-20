@@ -1,0 +1,59 @@
+##Test the Services locally
+
+GET http://localhost:4004/v2/CatalogService/$metadata
+
+http://localhost:4004/CatalogService/$metadata
+
+
+###Read Purchase Ordres
+
+https://localhost:4004/CatalogService/POs?$top=2&$expand=Items,PARTNER_GUID
+
+###Create New Employee
+
+POST http://localhost:4004/CatalogService/EmployeeSet
+Content-Type: application/json
+
+{
+"nameFirst"  : "Robin", 
+"nameMiddle" : null,
+"nameLast"  : "Ted",
+"nameInitials" : "RT",
+"sex"  : "F",
+"language"  : "E",
+"phoneNumber" : "+91 (123) 456-7890",
+"email"  : "robin.ted@birel.com",
+"loginName" : "RobinT"
+
+}
+
+##Read call to get single employee just created
+##v4 Call ( They key here is of type UUID and hence we might not use 
+
+GET http://localhost:4004/CatalogService/EmployeeSet/b8bf76be-8f8d-4854-ba2c-4cf7767888fe
+
+###Update the salary of employee
+PATCH http://localhost:4004/CatalogService/EmployeeSet/b8bf76be-8f8d-4854-ba2c-4cf7767888fe
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "salaryAmount" : 13000,
+    "Currency_code" : "USD"
+
+}
+
+
+###Post Request
+POST http://localhost:4004/CatalogService/POs
+Content-Type: application/json
+
+{
+    "Currency": { "code" : "EUR" },
+    "GROSS_AMOUNT" : "3913.91",
+    "NET_AMOUNT" : "3289",
+    "TAX_AMOUNT": "624.91",
+    "PO_ID": 300000300,
+    "LIFECYCLE_STATUS": "N",
+    "OVERALL_STATUS": "P"
+    
+}
