@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_PO" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="Purchase Order"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="EPM_DB_TRANSACTION_POITEMS">
+    <resourceUri>EPM_DB_TRANSACTION_POITEMS</resourceUri>
+  </DataSource>
+  <DataSource id="EPM_DB_TRANSACTION_PURCHASEORDER">
+    <resourceUri>EPM_DB_TRANSACTION_PURCHASEORDER</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="POItem" cardinality="C1_N" joinType="referential">
+    <viewAttributes>
+      <viewAttribute id="ID"/>
+      <viewAttribute id="PO_ID" aggregationType="sum"/>
+      <viewAttribute id="PARTNER_GUID_NODE_KEY"/>
+      <viewAttribute id="OVERALL_STATUS"/>
+      <viewAttribute id="CURRENCY_CODE"/>
+      <viewAttribute id="GROSS_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="NET_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="TAX_AMOUNT" aggregationType="sum"/>
+      <viewAttribute id="PO_ITEM_POS" aggregationType="sum"/>
+      <viewAttribute hidden="true" id="JOIN$ID$ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="EPM_DB_TRANSACTION_POITEMS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY_CODE" source="CURRENCY_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROSS_AMOUNT" source="GROSS_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NET_AMOUNT" source="NET_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_AMOUNT" source="TAX_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PO_ITEM_POS" source="PO_ITEM_POS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ID$ID" source="ID"/>
+    </input>
+    <input node="EPM_DB_TRANSACTION_PURCHASEORDER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PO_ID" source="PO_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_GUID_NODE_KEY" source="PARTNER_GUID_NODE_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OVERALL_STATUS" source="OVERALL_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ID$ID" source="ID"/>
+    </input>
+    <joinAttribute name="JOIN$ID$ID"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="POItem">
+  <attributes>
+    <attribute id="ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ID"/>
+      <keyMapping columnObjectName="POItem" columnName="ID"/>
+    </attribute>
+    <attribute id="PO_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PO_ID"/>
+      <keyMapping columnObjectName="POItem" columnName="PO_ID"/>
+    </attribute>
+    <attribute id="PARTNER_GUID_NODE_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER_GUID_NODE_KEY"/>
+      <keyMapping columnObjectName="POItem" columnName="PARTNER_GUID_NODE_KEY"/>
+    </attribute>
+    <attribute id="OVERALL_STATUS" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OVERALL_STATUS"/>
+      <keyMapping columnObjectName="POItem" columnName="OVERALL_STATUS"/>
+    </attribute>
+    <attribute id="CURRENCY_CODE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CURRENCY_CODE"/>
+      <keyMapping columnObjectName="POItem" columnName="CURRENCY_CODE"/>
+    </attribute>
+    <attribute id="PO_ITEM_POS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PO_ITEM_POS"/>
+      <keyMapping columnObjectName="POItem" columnName="PO_ITEM_POS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="GROSS_AMOUNT" order="6" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GROSS_AMOUNT"/>
+      <measureMapping columnObjectName="POItem" columnName="GROSS_AMOUNT"/>
+    </measure>
+    <measure id="NET_AMOUNT" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="NET_AMOUNT"/>
+      <measureMapping columnObjectName="POItem" columnName="NET_AMOUNT"/>
+    </measure>
+    <measure id="TAX_AMOUNT" order="8" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TAX_AMOUNT"/>
+      <measureMapping columnObjectName="POItem" columnName="TAX_AMOUNT"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="POItem" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="190"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="EPM_DB_TRANSACTION_POITEMS" modelObjectNameSpace="POItem" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="460" y="109"/>
+      <rectangleSize width="268.69140625"/>
+    </shape>
+    <shape modelObjectName="EPM_DB_TRANSACTION_PURCHASEORDER" modelObjectNameSpace="POItem" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="16" y="51"/>
+      <rectangleSize width="325.36328125"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

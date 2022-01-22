@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_BP" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CV_BP"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="EPM_DB_MASTER_BUSINESSPARTNER">
+    <resourceUri>EPM_DB_MASTER_BUSINESSPARTNER</resourceUri>
+  </DataSource>
+  <DataSource id="EPM_DB_MASTER_ADDRESS">
+    <resourceUri>EPM_DB_MASTER_ADDRESS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="BPAddress" cardinality="C1_1" joinType="inner">
+    <descriptions>
+      <comment text="Join between BP and Address table to fetch the address"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="NODE_KEY"/>
+      <viewAttribute id="BP_ROLE"/>
+      <viewAttribute id="BP_ID"/>
+      <viewAttribute id="COMPANY_NAME"/>
+      <viewAttribute id="CITY"/>
+      <viewAttribute id="COUNTRY"/>
+      <viewAttribute hidden="true" id="JOIN$ADDRESS_GUID_NODE_KEY$NODE_KEY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="EPM_DB_MASTER_BUSINESSPARTNER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="NODE_KEY" source="NODE_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BP_ROLE" source="BP_ROLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BP_ID" source="BP_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ADDRESS_GUID_NODE_KEY$NODE_KEY" source="ADDRESS_GUID_NODE_KEY"/>
+    </input>
+    <input node="EPM_DB_MASTER_ADDRESS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ADDRESS_GUID_NODE_KEY$NODE_KEY" source="NODE_KEY"/>
+    </input>
+    <joinAttribute name="JOIN$ADDRESS_GUID_NODE_KEY$NODE_KEY"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="BPAddress">
+  <attributes>
+    <attribute id="NODE_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NODE_KEY"/>
+      <keyMapping columnObjectName="BPAddress" columnName="NODE_KEY"/>
+    </attribute>
+    <attribute id="BP_ROLE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BP_ROLE"/>
+      <keyMapping columnObjectName="BPAddress" columnName="BP_ROLE"/>
+    </attribute>
+    <attribute id="BP_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BP_ID"/>
+      <keyMapping columnObjectName="BPAddress" columnName="BP_ID"/>
+    </attribute>
+    <attribute id="COMPANY_NAME" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPANY_NAME"/>
+      <keyMapping columnObjectName="BPAddress" columnName="COMPANY_NAME"/>
+    </attribute>
+    <attribute id="CITY" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CITY"/>
+      <keyMapping columnObjectName="BPAddress" columnName="CITY"/>
+    </attribute>
+    <attribute id="COUNTRY" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COUNTRY"/>
+      <keyMapping columnObjectName="BPAddress" columnName="COUNTRY"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="false" modelObjectName="BPAddress" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="64" y="261"/>
+      <rectangleSize height="30" width="296"/>
+    </shape>
+  
+    <shape modelObjectName="EPM_DB_MASTER_BUSINESSPARTNER" modelObjectNameSpace="BPAddress" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="296"/>
+    </shape>
+    <shape modelObjectName="EPM_DB_MASTER_ADDRESS" modelObjectNameSpace="BPAddress" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="425" y="30"/>
+      <rectangleSize width="236"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
