@@ -1,0 +1,155 @@
+#### Example 1
+
+do begin
+
+--my sql script logic
+
+declare x integer;
+declare y integer;
+declare z integer ;
+
+x = 10; y=10;
+z = :x + :y;
+select cast( z as decimal(10,2)), sysuuid from dummy;
+
+end;
+
+
+
+### Example 2 ( To read the values from user )
+
+do( in x integer => ?, in y integer=> ?) begin
+
+--my sql script logic
+
+declare z integer ;
+z = :x + :y;
+select cast( z as decimal(10,2)), sysuuid from dummy;
+
+end;
+
+#### Example 3 ( Find Odd/Even )
+
+do( in x integer => ?, out res string => ? ) begin
+if(mod(x,2) = 0 ) then 
+	res := 'Even';
+else
+	res := 'Odd';
+end if;
+end;
+
+
+####Example 4 ( Find Factorial of a number )
+
+do ( in x integer => ?, out res integer => ?) begin
+res = 1;
+while :x > 0 do
+    res := :res * :x;
+    x := :x - 1;
+end while;
+end;
+
+###Example 5  (Dynamic Select)
+do( in tabname varchar(120) => ?) begin
+execute immediate 'select * from ' || :tabname;
+end;
+
+### Example 5 , "Bit on arrays
+
+do( out fruitname varchar(60) => ? )begin
+
+declare arr_num integer array = array(3,1,2);
+declare arr_fruits varchar(60) array = array('Cherry', 'Apple', 'Orange');
+
+fruitName := :arr_fruits[:arr_num[3]];
+
+end;
+
+
+#### Example 6  ( Parameterized Cursor, selection works even without cursor )
+
+do (in cat varchar(60) => ?, out pid1 varchar(60) => ?, out pid2 varchar(60) => ?) begin
+
+--declare the cursor
+declare cursor c1(pcat varchar(60)) for select product_id from "73D0AAFFD042495494B36A16A8448ECE"."EPM_DB_MASTER_PRODUCT" where category = :pcat;
+--open the cursor
+open c1(:cat);
+--fetch data using cursor
+fetch c1 into pid1;
+fetch c1 into pid2;
+--close cursor
+close c1;
+
+end;
+
+##Example 6.1 ( Loop through the cursor to get all the data - however, it is showing the result in binary format)
+--We also have a limitation of not being able to pass the arrays as an output parameter
+
+do (in cat varchar(60) => ?) begin
+declare arr_pid varchar(20) array;
+declare arr_price decimal(10,2) array;
+--declare the cursor
+declare cursor c1(pcat varchar(60)) for select product_id, price from EPM_DB_MASTER_PRODUCT where category = :pcat;
+--loop will auto handle open, close and fetch
+for wa as c1(:cat) do
+arr_pid[c1::rowcount] = wa.product_id;
+arr_price[c1::rowcount] = wa.price;
+end for;
+select :arr_pid, :arr_price from dummy;
+end;
+
+##Example 6.2 ( Loop through the cursor to get all the data and convert the array to table using unnest function )
+- -One example is say you want to apply a specific discount to product category 
+
+do (in cat varchar(60) => ?, out tab_prices table(product_id varchar(60), price decimal(10,2), origprice decimal(10,2)) => ?) begin
+
+declare arr_pid varchar(20) array;
+declare arr_price decimal(10,2) array;
+declare arr_price_orig decimal(10,2) array;
+--declare the cursor
+declare cursor c1(pcat varchar(60)) for select product_id, price from EPM_DB_MASTER_PRODUCT where category = :pcat;
+--loop will auto handle open, close and fetch
+for wa as c1(:cat) do
+arr_pid[c1::rowcount] = wa.product_id;
+if ( cat = 'Notebooks' ) then
+arr_price[c1::rowcount] = wa.price * 0.90;
+else
+arr_price[c1::rowcount] = wa.price;
+end if;
+arr_price_orig[c1::rowcount] = wa.price;
+end for;
+
+--select :arr_pid, :arr_price from dummy;
+tab_prices = unnest(:arr_pid,:arr_price,:arr_price_orig) as (product_id, price, origprice);
+end;
+
+##Example 7 - Better Approach to handle above problem - From HANA 2.0
+
+do (in cat varchar(60) => ?, out tab_prices table(product_id varchar(60), price decimal(10,2), mrp decimal(10,2)) => ?,
+out e_total decimal(10,2) => ?, out e_mrp_tot decimal(10,2) => ?
+) begin
+declare lv_mrp decimal(10,2);
+declare reccount integer;
+declare i integer;
+
+--implicit table
+lt_prod = select product_id, price from EPM_DB_MASTER_PRODUCT;
+--loop at table itab..
+reccount := record_count(:lt_prod);
+for i in 1..:reccount do
+
+lv_mrp := :lt_prod.price[i] * 118 / 100;
+--appned wa to itab
+:tab_prices.insert( (:lt_prod.product_id[i], :lt_prod.price[i], :lv_mrp), :i);
+--itab.insert((record), index)
+
+end for;
+
+select sum(price) as price, sum(mrp) as mrps into e_total,e_mrp_tot from :tab_prices;
+end;
+
+
+
+
+
+

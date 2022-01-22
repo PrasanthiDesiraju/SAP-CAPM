@@ -1,7 +1,9 @@
-
 # auto generated wildcard
 db/.env
 node_modules
 gen/db/src/gen/
 db/src/gen
 src/gen
+
+# added by cds deploy
+default-env.json

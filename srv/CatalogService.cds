@@ -1,6 +1,12 @@
-using { epm.db } from '../db/datamodel';
+using { epm.db , CV_PURC } from '../db/datamodel';
 
 service CatalogService@(path:'/CatalogService') {
+
+    function sleep() returns Boolean;
+    
+    @readonly
+    entity PurchaseOrderCalcView as projection on CV_PURC;
+
 
     entity EmployeeSet as projection on db.master.employees;
 
@@ -29,5 +35,6 @@ service CatalogService@(path:'/CatalogService') {
     entity ProductAggregation1 as projection on db.CDSViews.CProductValuesView excluding {
         ProductId
     };
-
+    
+ 
 }

@@ -106,14 +106,7 @@
       <keyMapping columnObjectName="Join_1" columnName="PO_ITEM_POS"/>
     </attribute>
   </attributes>
-  <calculatedAttributes>
-    <calculatedAttribute id="CurrentDate" order="16" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Today&apos;s Date"/>
-      <keyCalculation datatype="DATE" expressionLanguage="SQL">
-        <formula>NOW()</formula>
-      </keyCalculation>
-      </calculatedAttribute>
-  </calculatedAttributes>
+  <calculatedAttributes/>
   <baseMeasures>
     <measure id="GROSS_AMOUNT" order="12" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="GROSS_AMOUNT"/>
@@ -146,15 +139,15 @@
     </shape>
     <shape modelObjectName="CV_BP" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="77" y="28"/>
-      <rectangleSize width="178.69970703125"/>
+      <rectangleSize width="178"/>
     </shape>
     <shape modelObjectName="CV_PO" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="380" y="28"/>
-      <rectangleSize width="237.19091796875"/>
+      <rectangleSize width="237"/>
     </shape>
     <shape modelObjectName="Join_1" modelObjectNameSpace="StarJoinViewNodeInput" modelObjectType="repository">
       <upperLeftCorner x="97" y="3"/>
-      <rectangleSize width="237.19091796875"/>
+      <rectangleSize width="237"/>
     </shape>
   </shapes>
 </layout>
