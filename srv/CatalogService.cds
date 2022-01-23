@@ -1,4 +1,4 @@
-using { epm.db , CV_PURC } from '../db/datamodel';
+using { epm.db , CV_PURC, CV_PURCHASE_ORDER_TF } from '../db/datamodel';
 
 service CatalogService@(path:'/CatalogService') {
 
@@ -7,7 +7,7 @@ service CatalogService@(path:'/CatalogService') {
     @readonly
     entity PurchaseOrderCalcView as projection on CV_PURC;
 
-
+    entity PurchaseOrdersWithTF as projection on CV_PURCHASE_ORDER_TF;
     entity EmployeeSet as projection on db.master.employees;
 
     entity AddressSet as projection on db.master.address;
@@ -23,7 +23,7 @@ service CatalogService@(path:'/CatalogService') {
         Items: redirected to POItems
     }
 
-    entity POItems @( title : '{i18n>poItems}' )
+    entity POItems @( title : '{i18n>poIteSms}' )
     as projection on db.transaction.poitems{
         *,
         PARENT_KEY: redirected to POs,

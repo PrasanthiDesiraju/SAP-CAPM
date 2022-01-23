@@ -1,0 +1,42 @@
+LIBRARY "masterdata"
+LANGUAGE SQLSCRIPT
+AS
+BEGIN
+
+public VARIABLE rowcount int;
+
+public FUNCTION "employee_exists"(
+    in im_employeeid NVARCHAR(36)
+) returns result boolean as BEGIN
+
+    declare lv_count int;
+    select count(*) into lv_count from "EPM_DB_MASTER_EMPLOYEES" where loginname = im_employeeid;
+    if :lv_count > 0 then
+      result = true;
+    ELSE
+      result = false; 
+    end if;
+end;
+
+public procedure "get_business_partner_data"(
+    out ex_business_partner "EPM_DB_MASTER_BUSINESSPARTNER"
+) LANGUAGE SQLSCRIPT
+SQL SECURITY INVOKER
+as BEGIN
+
+ex_business_partner = select * from "EPM_DB_MASTER_BUSINESSPARTNER";
+rowcount = RECORD_COUNT(:ex_business_partner);
+
+END;
+
+public procedure "get_employee_data"(
+             out ex_employees "EPM_DB_MASTER_EMPLOYEES" )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   AS
+begin
+  ex_employees = select * from "EPM_DB_MASTER_EMPLOYEES";
+  rowcount = record_count(:ex_employees);
+end;
+
+end;
