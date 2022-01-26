@@ -40,10 +40,10 @@ module.exports = cds.service.impl(
             try{
                 const ID = req.params[0];
                 console.log("Your Purchase Order with ID " + ID + "will be boosted");
-                const tx = cds.tx(req);
+                const tx = await cds.tx(req);
                 await tx.update(POs).with({
                     GROSS_AMOUNT: { '+=' : 20000 }, NOTE: "Boosted!!"
-                }).where(ID);
+                }).where({ID: ID});
                 return {};  
             }
             catch (error) {

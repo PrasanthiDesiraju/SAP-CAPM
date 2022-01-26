@@ -98,7 +98,7 @@ DELETE http://localhost:4004/mysrv/DeleteEmployeeSrv/02BD2137-0890-1EEA-A6C2-BB5
 
 ###Get PO Information - 02BD2137-0890-1EEA-A6C2-BB55C1978999
 ###Calling action for the Entity
-GET http://localhost:4004/CatalogService/POs
+GET http://localhost:4004/CatalogService/POs/02BD2137-0890-1EEA-A6C2-BB55C1978999
 
 ###Boost
 ###Calling action for the Entity
