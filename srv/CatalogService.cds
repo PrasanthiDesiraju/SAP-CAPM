@@ -8,6 +8,8 @@ service CatalogService@(path:'/CatalogService') {
     entity PurchaseOrderCalcView as projection on CV_PURC;
 
     entity PurchaseOrdersWithTF as projection on CV_PURCHASE_ORDER_TF;
+    
+    @Capabilities : { Insertable:false, Updatable, Deletable }
     entity EmployeeSet as projection on db.master.employees;
 
     entity AddressSet as projection on db.master.address;
@@ -21,6 +23,9 @@ service CatalogService@(path:'/CatalogService') {
     ) as projection on db.transaction.purchaseorder{
         *,
         Items: redirected to POItems
+    }actions{
+        function largestOrder() returns array of POs;
+        action boost();
     }
 
     entity POItems @( title : '{i18n>poIteSms}' )

@@ -37,8 +37,8 @@ PATCH http://localhost:4004/CatalogService/EmployeeSet/b8bf76be-8f8d-4854-ba2c-4
 Content-Type: application/json;IEEE754Compatible=true
 
 {
-    "salaryAmount" : 13000,
-    "Currency_code" : "USD"
+    "salaryAmount" : 12000,
+    "Currency_code" : "EUR"
 
 }
 
@@ -57,3 +57,53 @@ Content-Type: application/json
     "OVERALL_STATUS": "P"
     
 }
+
+###Custom Services
+###Read From Custom Handler
+GET http://localhost:4004/mysrv/ReadEmployeeSrv
+
+
+###Create new Employee
+POST http://localhost:4004/mysrv/InsertEmployeeSrv
+Content-Type: application/json
+
+{ 
+            "nameFirst": "Ted",
+            "nameMiddle": null,
+            "nameLast": "Mosby",
+            "nameInitials": null,
+            "sex": "M",
+            "language": "E",
+            "phoneNumber": "123-456-7890",
+            "email": "ted.mosby@gmail.com",
+            "loginName": "MOSBYD",
+            "accountNumber": "111222333",
+            "bankName": "HDFC bank"
+}
+
+###Update using Custom Handler
+PUT  http://localhost:4004/mysrv/UpdateEmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C19867FB
+Content-Type: application/json;IEEE754Compatible=true
+
+{           
+    "ID": "02BD2137-0890-1EEA-A6C2-BB55C19867FB",
+    "nameFirst": "Chrisopher",
+    "nameLast": "Columbus"
+}
+
+###DELETE The data using Custom Handler
+DELETE http://localhost:4004/mysrv/DeleteEmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C19867FB
+
+#Actions
+
+###Get PO Information - 02BD2137-0890-1EEA-A6C2-BB55C1978999
+###Calling action for the Entity
+GET http://localhost:4004/CatalogService/POs
+
+###Boost
+###Calling action for the Entity
+POST http://localhost:4004/CatalogService/POs/02BD2137-0890-1EEA-A6C2-BB55C1978999/CatalogService.boost
+Content-Type: application/json
+
+###Read the largest PO order (Need to check )
+GET http://localhost:4004/CatalogService/POs/02BD2137-0890-1EEA-A6C2-BB55C1978999/CatalogService.largestOrder()
