@@ -1,7 +1,8 @@
 using { epm.db , CV_PURC, CV_PURCHASE_ORDER_TF } from '../db/datamodel';
 
-service CatalogService@(path:'/CatalogService') {
-
+service CatalogService@(path:'/CatalogService') 
+       @(requires: 'authenticated-user')
+    {
     function sleep() returns Boolean;
     
     @readonly

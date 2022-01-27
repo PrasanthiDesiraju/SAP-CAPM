@@ -38,13 +38,23 @@ modules:
  - name: pocapapp-db-deployer
  # ------------------------------------------------------------
    type: hdb
-   path: db  
+   path: gen/db  
    parameters:
      buildpack: nodejs_buildpack
    requires:
     # 'hana' and 'xsuaa' resources extracted from CAP configuration
     - name: pocapapp-db
-
+ - name: purchaseorder-ui
+   type: nodejs
+   path: app
+   requires:
+    - name: srv-api
+      group: destinations
+      properties:
+         name: srv-api
+         strictSSL: true
+         forwardAuthToken: true
+         url: '~{srv-url}'
 
 resources:
  # services extracted from CAP configuration
