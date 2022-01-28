@@ -140,4 +140,23 @@ Authorization: Basic anubhav:
 
 Basics
 https://help.sap.com/viewer/4505d0bdaf4948449b7f7379d24d0f0d/2.0.04/en-US/6d3ed64092f748cbac691abc5fe52985.html#loio6d3ed64092f748cbac691abc5fe52985__section_myf_zzy_2bb
+
+
+6. Enhance the rule for authorization
+entity EmployeeSet 
+    @(restrict: [ 
+    { grant: ['READ'], to: 'Viewer',
+      where: 'bankName = $user.BankName' },
+    ])
+    as projection on master.employees;    
+
+
++++++++++++++++++++++++++++Working with UAA Manually with POSTMAN
+1. Download the collection from project folder and import to your POSTMAN
+2. got to bas terminal - cf env pocapapp-srv (You will find it in the mta.yaml)
+3. Extract the client_id, url, client_secret from xsuaa env variable
+4. Replace all properties in POSTMAN Collection to derive XSUAA issued JWT Token
+5. Decode JWT to JSON from - https://codebeautify.org/base64-to-json-converter
+6. Take the access_token and pass to next call to -srv service in postman, under authortization = Bearer <token>
+7. Make get call   
             

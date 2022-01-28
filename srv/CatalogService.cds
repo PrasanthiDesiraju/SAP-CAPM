@@ -11,7 +11,11 @@ service CatalogService@(path:'/CatalogService')
     entity PurchaseOrdersWithTF as projection on CV_PURCHASE_ORDER_TF;
     
     @Capabilities : { Insertable:false, Updatable, Deletable }
-    entity EmployeeSet as projection on db.master.employees;
+    entity EmployeeSet 
+    @(restrict: [
+        { grant: ['READ'], to: 'Viewer',
+      where : 'bankName = $user.BankName' } ])
+    as projection on db.master.employees;
 
     entity AddressSet as projection on db.master.address;
 

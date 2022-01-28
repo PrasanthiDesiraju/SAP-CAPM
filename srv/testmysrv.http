@@ -28,8 +28,13 @@ Content-Type: application/json
 }
 
 ###Get EMployee
-GET http://localhost:4004/CatalogService/EmployeeSet
-Authorization: Basic :
+GET http://localhost:4004/CatalogService/EmployeeSet/$count
+Authorization: Basic admin:
+
+###Get EMployee ( with limited access)
+GET http://localhost:4004/CatalogService/EmployeeSet/$count
+Authorization: Basic regular:
+
 
 ##Read call to get single employee just created
 ##v4 Call ( They key here is of type UUID and hence we might not use 
