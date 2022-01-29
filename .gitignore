@@ -10,3 +10,5 @@ mtar_archieve
 # added by cds deploy
 default-env.json
 mta_archives
+# auto generated wildcard
+gen/db/.env

@@ -53,7 +53,7 @@
     },
     "cds": {
         "build": {
-            "target": "./gen"
+            "target": "./gen"  
         },
             "requires": {
                 "uaa": {

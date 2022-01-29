@@ -1,4 +1,10 @@
 {
+  "SERVICE_REPLACEMENTS": [
+    {
+      "key": "ServiceName_1",
+      "service": "MY_SFLIGHT_SRV"
+    }
+  ],
   "VCAP_SERVICES": {
     "hana": [
       {
@@ -17,6 +23,25 @@
           "schema": "73D0AAFFD042495494B36A16A8448ECE",
           "url": "jdbc:sap://ca0b0492-a305-4add-a230-0c33073695a2.hana.trial-us10.hanacloud.ondemand.com:443?encrypt=true&validateCertificate=true&currentschema=73D0AAFFD042495494B36A16A8448ECE",
           "user": "73D0AAFFD042495494B36A16A8448ECE_0LMYL7E7PQG7BWAR5PKROF9BF_RT"
+        }
+      }
+    ],
+    "user-provided": [
+      {
+        "label": "user-provided",
+        "name": "MY_SFLIGHT_SRV",
+        "tags": [],
+        "instance_name": "MY_SFLIGHT_SRV",
+        "binding_name": null,
+        "credentials": {
+          "password": "Welcome1",
+          "schema": "SFLIGHT",
+          "tags": [
+            "hana"
+          ],
+          "user": "CUPS",
+          "syslog_drain_url": "",
+          "volume_mounts": []
         }
       }
     ]
