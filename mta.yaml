@@ -32,6 +32,13 @@ modules:
       buildpack: nodejs_buildpack
     requires:
       - name: pocapapp-db
+  - name: pocapapp-user-db-deployer
+    type: hdb
+    path: gen/user_db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: pocapapp-user-db
   - name: purchaseorder-ui
     type: nodejs
     path: app
@@ -52,6 +59,13 @@ resources:
       service-plan: hdi-shared
     properties:
       hdi-service-name: '${service-name}'
+  - name: pocapapp-user-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+    properties:
+      user-service-name: '${service-name}'
   - name: pocapcapp-xsuaa
     type: org.cloudfoundry.managed-service
     parameters:
